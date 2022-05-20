@@ -120,6 +120,3 @@ def recargo_nocturno_report(documento = 'C',nombre = 'D', tipo_de_recargo ='G', 
 
 
 recargo_nocturno_report()
-
-
-
