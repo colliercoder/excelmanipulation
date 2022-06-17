@@ -2,7 +2,7 @@ import xlwings as xw
 import openpyxl
 from openpyxl.utils import get_column_letter, column_index_from_string
 import holidays
-
+from ColombianHolidays import days_before_holidays
 # Establish a connection to a workbook
 hours_report = xw.Book(r"C:\Users\15402\Desktop\python_hours_script\hours_report.xlsx")
 schedule = xw.Book(r"C:\Users\15402\Desktop\python_hours_script\miner_schedule.xlsx")
@@ -18,8 +18,8 @@ sheet = wb['MUZO EMPLOYEES JUNE']
 lista = hours_report.sheets['LISTA']
 
 #Colombian Holidays
-colombianHolidays = holidays.Colombia()
-
+colombianHolidays = holidays.Colombia(years = 2022)
+days_before_holidays = days_before_holidays()
 # Variables for novedad o tipo de hora 'G'
 diurno = lista.range('C1').value
 nocturno = lista.range('C2').value
@@ -35,7 +35,7 @@ day_start_hr = lista.range('B9').value
 night_start_hr = lista.range('B10').value
 
 
-def hora_extra_dict(row_start = 9,col_start = 'E',col_end = 'AH',name_col = 'D',cedula_col = 'C'):
+def hora_extra_dict(row_start = 9,col_start = 'E',col_end = 'AI',name_col = 'D',cedula_col = 'C'):
     #initializing count and dictionary
     count = 0
     extraHrs_dict = {}
@@ -52,7 +52,7 @@ def hora_extra_dict(row_start = 9,col_start = 'E',col_end = 'AH',name_col = 'D',
             date = sheet.cell(row=row_start-2, column=x).value
             if shift != 'O' and name != 'NEW PERSON':  # the None clause gets rid of new miner
                 if shift == 'N':
-                    if date.weekday() == 6 or date.weekday() in colombianHolidays:
+                    if date.weekday() == 6 or date in colombianHolidays:
                         dicts = {'name': name, 'cedula': cedula, 'date': date, 'shift': shift,
                                  'novedad': domN, 'turno normal': night_turno_hrs, 'hora_enque_efectua': night_start_hr,
                                  'actividad': 'RAMPA JD', 'num_of_horas': 2}
@@ -61,7 +61,7 @@ def hora_extra_dict(row_start = 9,col_start = 'E',col_end = 'AH',name_col = 'D',
                                  'novedad': nocturno, 'turno normal': night_turno_hrs, 'hora_enque_efectua': night_start_hr,
                                  'actividad': 'RAMPA JD', 'num_of_horas': 2}
                 if shift == 'D':
-                    if date.weekday() == 6 or date.weekday() in colombianHolidays:
+                    if date.weekday() == 6 or date in colombianHolidays:
                         dicts = {'name': name, 'cedula': cedula, 'date': date, 'shift': shift,
                                  'novedad': domD, 'turno normal': day_turno_hrs, 'hora_enque_efectua': day_start_hr,
                                  'actividad': 'RAMPA JD', 'num_of_horas': 2}
@@ -110,3 +110,5 @@ def hora_extra_report(documento = 'C',nombre = 'D', novedad =
         extra_horas.range(cellL).value = extraHrs_dict[entry+1]['num_of_horas']
 
 hora_extra_report()
+
+print(colombianHolidays)

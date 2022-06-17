@@ -32,7 +32,7 @@ twelve_to_two = lista.range('H3').value
 nocturno = lista.range('G1').value
 nocturno_dom_fest = lista.range('G2').value
 
-def recargo_nocturno(row_start = 9,col_start = 'E',col_end = 'AH',name_col = 'D',cedula_col = 'C'):
+def recargo_nocturno(row_start = 9,col_start = 'E',col_end = 'AI',name_col = 'D',cedula_col = 'C'):
     #initializing count and dictionary
     count = 0
     nocturno_dict = {}

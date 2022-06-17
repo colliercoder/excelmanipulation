@@ -35,7 +35,7 @@ noche_antes_festivo = lista.range('F6').value
 
 #
 
-def domingo_dict(row_start = 9,col_start = 'E',col_end = 'AH',name_col = 'D',cedula_col = 'C'):
+def domingo_dict(row_start = 9,col_start = 'E',col_end = 'AI',name_col = 'D',cedula_col = 'C'):
     #initializing count and dictionary
     count = 0
     domingodict = {}
